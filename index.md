@@ -6,10 +6,10 @@ address: "Dalhousie Building, 75 Old Hawkhill, Dundee DD1 5EN"      # full stree
 country: "gb"      # lowercase two-letter ISO country code such as "fr" (see https://en.wikipedia.org/wiki/ISO_3166-1)
 language: "en"     # lowercase two-letter ISO language code such as "fr" (see https://en.wikipedia.org/wiki/ISO_639-1)
 latlng: "56.4594378,-2.9821926"       # decimal latitude and longitude of workshop venue (e.g., "41.7901128,-87.6007318" - use https://www.latlong.net/)
-humandate: "5th September 2018"    # human-readable dates for the workshop (e.g., "Feb 17-18, 2020")
+humandate: "5-7th September 2018"    # human-readable dates for the workshop (e.g., "Feb 17-18, 2020")
 humantime: "09:30-16:30"    # human-readable times for the workshop (e.g., "9:00 am - 4:30 pm")
 startdate: 2018-09-05      # machine-readable start date for the workshop in YYYY-MM-DD format like 2015-01-01
-enddate: 2018-09-06        # machine-readable end date for the workshop in YYYY-MM-DD format like 2015-01-02
+enddate: 2018-09-07        # machine-readable end date for the workshop in YYYY-MM-DD format like 2015-01-02
 instructor: ["Chris Cole", "Leighton Pritchard"] # boxed, comma-separated list of instructors' names as strings, like ["Kay McNulty", "Betty Jennings", "Betty Snyder"]
 helper: ["TBA"]     # boxed, comma-separated list of helpers' names, like ["Marlyn Wescoff", "Fran Bilas", "Ruth Lichterman"]
 email: ["c.cole@dundee.ac.uk"]    # boxed, comma-separated list of contact email addresses for the host, lead instructor, or whoever else is handling questions, like ["marlyn.wescoff@example.org", "fran.bilas@example.org", "ruth.lichterman@example.org"]
