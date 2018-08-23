@@ -125,9 +125,11 @@ eventbrite: 48842632629          # optional: alphanumeric key for Eventbrite reg
   {% endif %}
   <a href="{{site.swc_site}}/conduct.html">Code of Conduct</a>.
 </p>
+<p>
+  On the second day there will be an opportunity for you to bring your own data (BYOD). Please bring or have access to the data on the day and make sure there are no restrictions for sharing the data due to confidentiality etc. We will either pick one or two to work work through together as a class, or attendees can work on the data with helpers at hand for support. 
+</p>
 <p id="requirements">
   <strong>Pre-requisites:</strong> Experience of using R for data analysis and visualisation. Knowledge of programing concepts: version control (e.g. git), use of the linux commandline. Ideally, you have previously attended software carpentry courses on the above topics.
-</p>
 
 {% comment %}
   ACCESSIBILITY
