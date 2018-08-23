@@ -125,6 +125,9 @@ eventbrite: 48842632629          # optional: alphanumeric key for Eventbrite reg
   {% endif %}
   <a href="{{site.swc_site}}/conduct.html">Code of Conduct</a>.
 </p>
+<p id="requirements">
+  <strong>Pre-requisites:</strong> Experience of using R for data analysis and visualisation. Knowledge of programing concepts: version control (e.g. git), use of the linux commandline. Ideally, you have previously attended software carpentry courses on the above topics.
+</p>
 
 {% comment %}
   ACCESSIBILITY
