@@ -22,6 +22,9 @@ These notes are for the tutor(s) on the first morning session of the Software Ca
     - [NUMERICAL COMPARISONS](#numerical-comparisons)
     - [WORKING IN RSTUDIO](#working-in-rstudio)
     - [SECTION 02: MY FIRST `RSTUDIO` PROJECT](#section-02-my-first-rstudio-project)
+    - [LEARNING OBJECTIVES](#learning-objectives-2)
+    - [PROJECT MANAGEMENT IN RSTUDIO](#project-management-in-rstudio)
+    - [LOADING DATA](#loading-data)
 
 <!-- /TOC -->
 
@@ -433,3 +436,74 @@ cats <- read.csv(file = "feline_data.csv")
 
 ---
 
+### LEARNING OBJECTIVES
+
+- Good practice for `RStudio` project structure
+- Load data into an `RStudio` project
+- Produce summary statistics of data
+- Extract subsets of data
+- Plotting data in `R`
+
+---
+
+### PROJECT MANAGEMENT IN RSTUDIO
+
+- `RStudio` **TRIES TO BE HELPFUL** and provides the 'Project' concept
+  - Keeps **ALL PROJECT FILES IN A SINGLE DIRECTORY**
+  - **INTEGRATES WITH `GIT`**
+  - Enables switching between projects within `RStudio`
+  - Keeps project histories
+
+- **INTERACTIVE DEMO**
+
+- **CREATE PROJECT**
+- Click `File` -> `New Project`
+  - Options for how we want to create a project:
+    -brand new in a new working directory
+    - turn an existing directory into a project (project gets directory name)
+    - or checkout a project from `GitHub` or some other repository
+- Click `New Directory`
+  - Options for various things we can do in `RStudio`. Here we want `New Project`
+- Click `New Project`
+  - We are asked for a directory name. **ENTER `swc-r-lesson`**
+  - We are asked for a parent directory. **PUT YOURS ON THE DESKTOP; STUDENTS CAN CHOOSE ANYWHERE SENSIBLE**
+- Click `Create Project`
+- **YOU SHOULD SEE AN EMPTY-ISH `RSTUDIO` WINDOW**
+
+- **INSPECT PROJECT ENVIRONMENT**
+- First, **NOTE THE WINDOWS**: editor; environment; files
+- **EDITOR** is empty
+- **ENVIRONMENT** is empty
+- **FILES** shows
+  - **CURRENT WORKING DIRECTORY** (see breadcrumb trail)
+  - **ONE FILES**: `*.Rproj` - information about your project
+
+- **CREATE DIRECTORIES IN PROJECT**
+- **Create directoris called `scripts` and `data`**
+  - Click on `New Folder`
+  - Enter directory name (`scripts`)
+  - Note that the directory now exists in the `Files` tab
+  - Do the same for `data/`
+- **NOTE THAT WE WILL POPULATE THE DIRECTORIES AS WE GO**
+
+---
+
+### LOADING DATA
+
+- We've already created some cat data manually
+  - **THIS IS UNUSUAL** - most data comes in the form of plain text files
+
+**START DEMO**
+* **INSPECT DATA IN FILES WINDOW**
+    * Click on filename, and select `View File`
+    * Note: **THERE IS NO HEADER** and **THERE ARE NO ROW NAMES**
+    * Ask: **IS THIS WELL-FORMATTED DATA?**
+    * I happen to know that there is **one row per patient, and the columns are days, in turn, post-treatment**, and **measurements are inflammation levels**
+* **WHAT IS THE DATA TYPE**
+    * Tabular, with **EACH COLUMN SEPARATED BY A COMMA**, so **CSV**
+    * **IN THE CONSOLE** use `read.csv()` to read the data in
+    * Note: **IF WE DON'T ASSIGN THE RESULT TO A VARIABLE WE JUST SEE THE DATA**
+* **CREATE A NEW SCRIPT**
+    * Click the **triangle next to the new document icon**
+    * Add the code and **SAVE AS `scripts/inflammation`** (`RStudio` adds the extension)
+    * See that the file appears in `Files` window
