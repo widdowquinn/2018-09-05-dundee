@@ -256,7 +256,7 @@ We're going to create a new dataset and `R` script.
 - Data are most commonly read in from plain text files
 
 <div class="highlight">
-* Download data from [https://raw.githubusercontent.com/resbaz/r-novice-gapminder-files/master/data/gapminder-FiveYearData.csv](https://raw.githubusercontent.com/resbaz/r-novice-gapminder-files/master/data/gapminder-FiveYearData.csv)
+* Download data from [https://raw.githubusercontent.com/widdowquinn/2018-09-05-dundee/gh-pages/lessons/R/gapminder-FiveYearData.csv](https://raw.githubusercontent.com/widdowquinn/2018-09-05-dundee/gh-pages/lessons/R/gapminder-FiveYearData.csv)
 * Put the file in the new project's `data/` directory
 
 **A link is also available on the course Etherpad**
