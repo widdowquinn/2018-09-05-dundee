@@ -24,7 +24,14 @@ These notes are for the tutor(s) on the first morning session of the Software Ca
     - [SECTION 02: MY FIRST `RSTUDIO` PROJECT](#section-02-my-first-rstudio-project)
     - [LEARNING OBJECTIVES](#learning-objectives-2)
     - [PROJECT MANAGEMENT IN RSTUDIO](#project-management-in-rstudio)
-    - [LOADING DATA](#loading-data)
+    - [OBTAINING DATA](#obtaining-data)
+    - [INVESTIGATING `GAPMINDER`](#investigating-gapminder)
+- [SECTION 03: PROGRAM FLOW CONTROL](#section-03-program-flow-control)
+    - [LEARNING OBJECTIVES](#learning-objectives-3)
+    - [`IF()` … `ELSE`**](#if--else)
+    - [`FOR()` LOOPS](#for-loops)
+    - [`WHILE()` LOOPS](#while-loops)
+    - [CHALLENGE](#challenge)
 
 <!-- /TOC -->
 
@@ -467,16 +474,24 @@ cats <- read.csv(file = "feline_data.csv")
 - Click `New Project`
   - We are asked for a directory name. **ENTER `swc-r-lesson`**
   - We are asked for a parent directory. **PUT YOURS ON THE DESKTOP; STUDENTS CAN CHOOSE ANYWHERE SENSIBLE**
+  - **CHOOSE TO CREATE A GIT REPOSITORY**
+    - This might not be available to everyone, depending on setup, so **PAUSE HERE**
+
+![images/red_green_sticky.png](images/red_green_sticky.png)
+
 - Click `Create Project`
 - **YOU SHOULD SEE AN EMPTY-ISH `RSTUDIO` WINDOW**
 
 - **INSPECT PROJECT ENVIRONMENT**
-- First, **NOTE THE WINDOWS**: editor; environment; files
-- **EDITOR** is empty
+- First, **NOTE THE WINDOWS**: console; environment; files
+- **CONSOLE** is empty
 - **ENVIRONMENT** is empty
 - **FILES** shows
-  - **CURRENT WORKING DIRECTORY** (see breadcrumb trail)
-  - **ONE FILES**: `*.Rproj` - information about your project
+  - **CURRENT WORKING DIRECTORY** (see breadcrumb trail) **IS ROOT FOR PROJECT**
+  - **THREE FILES**:
+    - `*.Rproj` - information about your project
+    - `.Rhistory` - records actions taken on the project
+    - `.gitignore` - if you created a git repository, this contains paths/names of files to be ignored
 
 - **CREATE DIRECTORIES IN PROJECT**
 - **Create directoris called `scripts` and `data`**
@@ -486,24 +501,400 @@ cats <- read.csv(file = "feline_data.csv")
   - Do the same for `data/`
 - **NOTE THAT WE WILL POPULATE THE DIRECTORIES AS WE GO**
 
+- **LOOK AT THE GIT INTEGRATION**
+- There is a `.gitignore` file indicating that the project is under `git` version control
+- There is a **NEW TAB** called `Git` in the Environment pane
+  - **CLICK ON GIT TAB**
+  - There are two files, **NOTHING IS STAGED YET**
+  - **STAGE THE FILES** by clicking on the checkboxes
+    - It is **GOOD PRACTICE** to place the project `.Rproj` file under version control
+    - **NOTE STATUS CHANGES FROM `?` TO `A`** (added)
+  - **COMMIT THE FILES** by clicking `Commit`
+    - **NOTE THE NEW WINDOW**
+    - Show the `diff` for both files: green means added/new line
+    - **ADD A COMMIT MESSAGE** - remind learners of good practice
+      - good `Git` commit messages are imperative and short
+    - **CLICK COMMIT**
+    - Close the message box down
+
+- **NOTE THAT THIS IS JUST LIKE WORKING WITH GIT AT THE COMMAND LINE**
+- **OPEN THE `TERMINAL` TAB**
+  - **NOTE WE ARE IN THE WORKING DIRECTORY**
+  - **RUN COMMANDS**
+
+```bash
+$ git status
+On branch master
+nothing to commit, working tree clean
+$ git ls-files
+.gitignore
+swc-r-lesson.Rproj
+$ ls
+data/               scripts/            swc-r-lesson.Rproj
+```
+
+
 ---
 
-### LOADING DATA
+### OBTAINING DATA
 
 - We've already created some cat data manually
   - **THIS IS UNUSUAL** - most data comes in the form of plain text files
 
-**START DEMO**
-* **INSPECT DATA IN FILES WINDOW**
-    * Click on filename, and select `View File`
-    * Note: **THERE IS NO HEADER** and **THERE ARE NO ROW NAMES**
-    * Ask: **IS THIS WELL-FORMATTED DATA?**
-    * I happen to know that there is **one row per patient, and the columns are days, in turn, post-treatment**, and **measurements are inflammation levels**
-* **WHAT IS THE DATA TYPE**
-    * Tabular, with **EACH COLUMN SEPARATED BY A COMMA**, so **CSV**
-    * **IN THE CONSOLE** use `read.csv()` to read the data in
-    * Note: **IF WE DON'T ASSIGN THE RESULT TO A VARIABLE WE JUST SEE THE DATA**
-* **CREATE A NEW SCRIPT**
-    * Click the **triangle next to the new document icon**
-    * Add the code and **SAVE AS `scripts/inflammation`** (`RStudio` adds the extension)
-    * See that the file appears in `Files` window
+- **START DEMO**
+
+- **GO TO ETHERPAD**
+  - **DOWNLOAD DATA** - right-click on link and save to project's `data/` subdirectory
+  - **PUT DATA UNDER VERSION CONTROL** - this is **GOOD PRACTICE**
+    - For reproducibility, keep raw data with the analysis as much as is reasonable
+    - Discuss when it might not be reasonable
+    - **NOTE CHANGES IN `DATA/` SUBDIRECTORY**
+      - the directory shows up in the `Git` tab
+    - **STAGE `DATA/`**
+      - note that the filename is now shown
+    - **COMMIT THE DATAFILE**
+
+---
+
+### INVESTIGATING `GAPMINDER`
+
+- **INSPECT DATA IN FILES WINDOW**
+  - Click on filename, and select `View File`
+  - Note: **THERE ARE NO ROW NAMES**
+  - Ask: **IS THIS WELL-FORMATTED DATA?** (can you tell what the data represents?)
+  
+- **WHAT IS THE DATA TYPE**
+  - Tabular, with **EACH COLUMN SEPARATED BY A COMMA**, so **CSV**
+  - **IN THE CONSOLE** use `read.table()` to read the data in
+
+```R
+gapminder <- read.table("data/gapminder-FiveYearData.csv", sep=",", header=TRUE)
+```
+
+- Note: **IF WE DON'T ASSIGN THE RESULT TO A VARIABLE WE JUST SEE THE DATA**
+
+- Now we've loaded our data, let's take a look at it
+- **DEMO IN CONSOLE**
+  - 1704 rows, 6 columns
+  - Investigate types of columns
+  - **POINT OUT THAT THE TYPE OF A COLUMN IS INTEGER IF IT'S A FACTOR**
+  - **LENGTH OF A DATAFRAME IS THE NUMBER OF COLUMNS**
+
+```R
+> str(gapminder)
+'data.frame':	1704 obs. of  6 variables:
+ $ country  : Factor w/ 142 levels "Afghanistan",..: 1 1 1 1 1 1 1 1 1 1 ...
+ $ year     : int  1952 1957 1962 1967 1972 1977 1982 1987 1992 1997 ...
+ $ pop      : num  8425333 9240934 10267083 11537966 13079460 ...
+ $ continent: Factor w/ 5 levels "Africa","Americas",..: 3 3 3 3 3 3 3 3 3 3 ...
+ $ lifeExp  : num  28.8 30.3 32 34 36.1 ...
+ $ gdpPercap: num  779 821 853 836 740 ...
+> typeof(gapminder$year)
+[1] "integer"
+> typeof(gapminder$country)
+[1] "integer"
+> str(gapminder$country)
+ Factor w/ 142 levels "Afghanistan",..: 1 1 1 1 1 1 1 1 1 1 ...
+> levels(gapminder$country)
+  [1] "Afghanistan"              "Albania"                  "Algeria"                  "Angola"                  
+  [5] "Argentina"                "Australia"                "Austria"                  "Bahrain" 
+  [...] 
+> length(gapminder)
+[1] 6
+> nrow(gapminder)
+[1] 1704
+> ncol(gapminder)
+[1] 6
+> dim(gapminder)
+[1] 1704    6
+> colnames(gapminder)
+[1] "country"   "year"      "pop"       "continent" "lifeExp"   "gdpPercap"
+> head(gapminder)
+      country year      pop continent lifeExp gdpPercap
+1 Afghanistan 1952  8425333      Asia  28.801  779.4453
+2 Afghanistan 1957  9240934      Asia  30.332  820.8530
+3 Afghanistan 1962 10267083      Asia  31.997  853.1007
+4 Afghanistan 1967 11537966      Asia  34.020  836.1971
+5 Afghanistan 1972 13079460      Asia  36.088  739.9811
+6 Afghanistan 1977 14880372      Asia  38.438  786.1134
+> summary(gapminder)
+        country          year           pop               continent      lifeExp     
+ Afghanistan:  12   Min.   :1952   Min.   :6.001e+04   Africa  :624   Min.   :23.60  
+ Albania    :  12   1st Qu.:1966   1st Qu.:2.794e+06   Americas:300   1st Qu.:48.20  
+ Algeria    :  12   Median :1980   Median :7.024e+06   Asia    :396   Median :60.71  
+ Angola     :  12   Mean   :1980   Mean   :2.960e+07   Europe  :360   Mean   :59.47  
+ Argentina  :  12   3rd Qu.:1993   3rd Qu.:1.959e+07   Oceania : 24   3rd Qu.:70.85  
+ Australia  :  12   Max.   :2007   Max.   :1.319e+09                  Max.   :82.60  
+ (Other)    :1632                                                                    
+   gdpPercap       
+ Min.   :   241.2  
+ 1st Qu.:  1202.1  
+ Median :  3531.8  
+ Mean   :  7215.3  
+ 3rd Qu.:  9325.5  
+ Max.   :113523.1
+```
+
+---
+
+## SECTION 03: PROGRAM FLOW CONTROL
+
+---
+
+### LEARNING OBJECTIVES
+
+* In this short section, you'll learn how to **perform actions depending on values of data** in `R`
+* You'll also learn how to **repeat operations, using `for()` loops**
+* **These are very important general concepts, that recur in many programming languages**
+* Much of the time, you can avoid using them in `R` data analyses, because `dplyr` exists, and because `R` is **vectorised**
+
+---
+
+### `IF()` … `ELSE`**
+
+- We **often want to run a piece of code, or take an action, dependent on whether some data has a particular value
+  - (if it is true or false, say)
+- When this is the case, we can use the general `if()` … `else` structure, which is common to most programming languages
+
+- **DEMO IN SCRIPT**
+- **CREATE NEW SCRIPT** (save as `scripts/flow_control.R`)
+  - Let's say that we want to print a message if some value is greater than 10
+  - **NOTE AUTOCOMPLETION/BRACKETS ETC.**
+  - **THE CODE TO BE RUN GOES IN CURLY BRACES**
+
+```R
+# A script to investigate flow control in R
+
+# Synthetic data
+x <- 8
+
+# Example conditional
+if (x > 10) {
+  print("x is greater than 10")
+}
+```
+
+- **`SOURCE` THE FILE**
+  - **NOTHING HAPPENS** (`x > 10` is `FALSE`)
+  - The `if()` block executes **ONLY IF THE VALUE IN PARENTHESES EVALUATES AS `TRUE`**
+
+
+- **MODIFY THE SCRIPT**
+  - Add the `else` block
+  - `Source` the code: **WE GET A MESSAGE**
+  - **BUT IS THE MESSAGE TRUE?**
+
+```R
+# Example if statement
+if (x > 10) {
+  print("x is greater than 10")
+} else {
+  print("x is less than 10")
+}
+```
+
+- **SET `x <- 10` AND TRY AGAIN**
+  - Is the answer correct?
+
+![images/red_green_sticky.png](images/red_green_sticky.png)
+
+- **MODIFY THE SCRIPT WITH `else if()` STATEMENT**
+  - `Source` the script: **NO OUTPUT**
+
+```R
+# A data point
+x <- 10
+
+# Example if statement
+if (x > 10) {
+  print("x is greater than 10")
+} else if (x < 10) {
+  print("x is less than 10")
+}
+```
+
+- **MODIFY THE SCRIPT WITH A FINAL `else` STATEMENT**
+  - `Source` the script: **EQUALS** output
+
+```R
+# A data point
+x <- 9
+
+# Example if statement
+if (x > 10) {
+  print("x is greater than 10")
+} else if (x < 10) {
+  print("x is less than 10")
+} else {
+  print("x is equal to 10")
+}
+```
+
+- **TRY SOME OTHER VALUES for `x`**
+
+----
+
+**SLIDE: Challenge**
+
+- Build up the solution with each concept in turn
+
+```R
+> gapminder$year
+   [1] 1952 1957 1962 1967 1972 1977 1982 1987 1992 1997 2002 2007 1952 1957 1962 1967 1972 1977 1982 1987 1992 1997 2002 2007
+  [25] 1952 1957 1962 1967 1972 1977 1982 1987 1992 1997 2002 2007 1952 1957 1962 1967 1972 1977 1982 1987 1992 1997 2002 2007
+  [...]
+> gapminder$year == 2002
+   [1] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+  [21] FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE
+  [...]
+> any(gapminder$year == 2002)
+[1] TRUE
+> any(gapminder$year == 2001)
+[1] FALSE
+# Are there any records for a year
+year <- 2002
+if(any(gapminder$year == year)){
+   print("Record(s) for this year found.")
+}
+```
+
+![images/red_green_sticky.png](images/red_green_sticky.png)
+
+---
+
+### `FOR()` LOOPS
+
+- If you want to iterate over a set of values, then `for()` loops can be used
+- `for()` loops are **A VERY COMMON PROGRAMMING CONSTRUCTION**
+- They express the idea: **FOR EACH ITEM IN A GROUP, DO SOMETHING (WITH THAT ITEM)**
+
+- **DEMO IN SCRIPT** (`scripts/flow_control.R`)
+  - Say we have a *vector* `c(1,2,3)`, and we want to print each item
+  - We can **loop over all the items** and print them
+- **The loop structure is**
+  - `for()`, where the argument names a variable (`i`) - the *iterator*, and a set of values: **`for(i in c('a', 'b', 'c'))`**
+  - A **CODE BLOCK** defined by curly braces (**note automated completion)
+  - The **contents of the code block are executed for each value of the iterator**
+
+```R
+# Example for loop
+for (i in c('a', 'b', 'c')) {
+  print(i)
+}
+```
+
+- **Loops can (but shouldn't always) be nested**
+- **DEMO IN SCRIPT**
+  - The outer loop is executed and, **for each value in the outer loop, the inner loop is executed to completion**
+
+```R
+# Example nested for loop
+for (i in 1:5) {
+  for (j in c('a', 'b', 'c')) {
+    print(paste(i, j))
+  }
+}
+```
+
+- The simplest way to capture output from a loop is to add a new item to a vector each iteration of the loop
+- **DEMO IN SCRIPT**
+  -  **REMIND:** using `c()` to append to a vector
+
+```R
+# Capturing loop output in a vector
+output <- c()
+for (i in 1:5) {
+  for (j in c('a', 'b', 'c')) {
+    output <- c(output, paste(i, j))
+  }
+}
+print(output)
+``` 
+
+- **GROWING OUTPUT FROM LOOPS IS COMPUTATIONALLY VERY EXPENSIVE**
+  - Doing this will *really* slow down your scripts for larger datasets
+  - Better to define the empty output container first (**IF YOU KNOW THE DIMENSIONS**)
+- **MODIFY IN SCRIPT**
+
+```R
+# Capturing loop output in a matrix
+output_matrix <- matrix(nrow=5, ncol=3)
+j_letters = c('a', 'b', 'c')
+for (i in 1:5) {
+  for (j in 1:3) {
+    output_matrix[i, j] <- paste(i, j_letters[j])
+  }
+}
+print(output_matrix)
+```
+
+---
+
+### `WHILE()` LOOPS
+
+- Sometimes you need to perform some action **ONLY WHILE A CONDITION IS TRUE**
+  - This isn't as common as a `for()` loop
+  - It's another **GENERAL PROGRAMMING CONSTRUCTION**
+
+- **DEMO IN SCRIPT**
+  - We'll generate random numbers until one falls below a threshold
+  - `runif()` generates random numbers from a uniform distribution
+    - **ASK LEARNERS HOW TO GET HELP ON THIS**
+
+```R
+> ?runif
+```
+
+- We print random numbers until one is less than 0.1
+  - **RUN A COUPLE OF TIMES TO SHOW OUTPUT IS RANDOM**
+
+```R
+# Example while loop
+z <- 1
+while(z > 0.1){
+  z <- runif(1)
+  print(z)
+}
+```
+
+---
+
+### CHALLENGE
+
+- Best to give example of what `letters` is, and demonstrate how the help mechanism fails for `%in%`
+- Also show that `%in%` doesn't work for membership of a string - needs a vector
+
+```R
+> letters
+ [1] "a" "b" "c" "d" "e" "f" "g" "h" "i" "j" "k" "l" "m" "n" "o" "p" "q" "r" "s" "t" "u" "v" "w" "x" "y" "z"
+> ?%in%
+Error: unexpected SPECIAL in "?%in%"
+> ?in
+Error: unexpected 'in' in "?in"
+> ?"%in%"
+> 'e' %in% letters
+[1] TRUE
+> 'e' %in% 'aeiou'
+[1] FALSE
+> 'e' %in% c('a', 'e', 'i', 'o', 'u')
+[1] TRUE
+```
+
+- Then, in the script
+
+```R
+# Challenge solution
+vowels <- c('a', 'e', 'i', 'o', 'u', 'w', 'y')
+for (l in letters) {
+  if (l %in% vowels) {
+    value <- TRUE
+  } else {
+    value <- FALSE
+  }
+  print(paste(l, value))
+}
+```
+
+- **COMMIT THE SCRIPT TO THE REPO WHEN DONE**
+
+![images/red_green_sticky.png](images/red_green_sticky.png)
