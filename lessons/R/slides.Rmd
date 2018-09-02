@@ -392,6 +392,7 @@ while(this condition is true){
 
 <div class="attention">
 **HINT:** Use `R`'s built in `startsWith()` function
+
 **HINT:** Use `levels()` to get unique country names
 </div>
 
@@ -400,3 +401,41 @@ while(this condition is true){
 <div class="highlight">
 **Commit the script to the repository when you are done**
 </div>
+
+## Vectorisation
+
+* `for()` and `while()` loops are useful for program control (making decisions), but are not *efficient* for data manipulation in `R`
+* Many operations in `R` are *vectorised*
+    - Applying functions to a *vector*, applies to all elements in that *vector*
+    - **No need to loop**
+    
+<div class="highlight">
+You've already seen and used much of this behaviour
+</div>
+    
+<center>
+<div class="attention">
+**INTERACTIVE DEMO**
+</div>
+</center>
+
+```{r, eval=FALSE}
+x < 1:4
+x * 2
+y <- 6:9
+x + y
+```
+
+## Challenge (5min)
+
+**In your script**, can you use vectorisation to identify all countries in the `gapminder` data that start with the letter `M`?
+
+<div class="attention">
+**HINT:** Use `levels()` to get unique country names
+
+**HINT:** Use `R`'s built in `startsWith()` function
+
+**HINT:** Use *logical indexing*
+</div>
+
+<img src="images/red_green_sticky.png" width="100%" />

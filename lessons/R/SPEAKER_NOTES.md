@@ -32,6 +32,8 @@ These notes are for the tutor(s) on the first morning session of the Software Ca
     - [`FOR()` LOOPS](#for-loops)
     - [`WHILE()` LOOPS](#while-loops)
     - [CHALLENGE](#challenge)
+    - [VECTORISATION](#vectorisation)
+    - [CHALLENGE](#challenge-1)
 
 <!-- /TOC -->
 
@@ -896,5 +898,74 @@ for (c in levels(gapminder$country)) {
 ```
 
 - **COMMIT THE SCRIPT TO THE REPO WHEN DONE**
+
+![images/red_green_sticky.png](images/red_green_sticky.png)
+
+---
+
+### VECTORISATION
+
+- `for()` and `while()` loops are useful, but they are **NOT THE MOST EFFICIENT WAY TO WORK WITH DATA IN `R`**
+- **MOST FUNCTIONS IN `R` ARE VECTORISED**
+  - When applied to a vector, they work on all elements in the vector
+  - **NO NEED TO USE A LOOP**
+
+- **DEMO IN CONSOLE**
+  - **OPERATORS** are vectorised
+
+```R
+> x <- 1:4
+> x
+[1] 1 2 3 4
+> x * 2
+[1] 2 4 6 8
+```
+
+- **YOU CAN OPERATE ON VECTORS TOGETHER**
+
+```R
+> y <- 6:9
+> y
+[1] 6 7 8 9
+> x + y
+[1]  7  9 11 13
+> x * y
+[1]  6 14 24 36
+```
+
+- **COMPARISON OPERATORS ARE VECTORISED**
+
+```R
+> x > 2
+[1] FALSE FALSE  TRUE  TRUE
+> y < 7
+[1]  TRUE FALSE FALSE FALSE
+> any(y < 7)
+[1] TRUE
+> all(y < 7)
+[1] FALSE
+```
+
+- **MANY FUNCTIONS WORK ON VECTORS**
+
+```R
+> log(x)
+[1] 0.0000000 0.6931472 1.0986123 1.3862944
+> x^2
+[1]  1  4  9 16
+> sin(x)
+[1]  0.8414710  0.9092974  0.1411200 -0.7568025
+```
+
+---
+
+### CHALLENGE
+
+```R
+# Challenge solution
+countries <- levels(gapminder$country)
+mstart <- startsWith(countries, 'M')
+print(countries[mstart])
+```
 
 ![images/red_green_sticky.png](images/red_green_sticky.png)
