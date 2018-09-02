@@ -53,6 +53,11 @@ These notes are for the tutor(s) on the first morning session of the Software Ca
     - [`select()`](#select)
     - [`filter()`](#filter)
     - [CHALLENGE](#challenge-2)
+    - [`group_by()`](#group_by)
+    - [`summarize()`](#summarize)
+    - [CHALLENGE](#challenge-3)
+    - [`count()` and `n()`](#count-and-n)
+    - [`mutate()`](#mutate)
 
 <!-- /TOC -->
 
@@ -1683,5 +1688,203 @@ The dataframe `afrodata` has `r nrow(afrodata)` rows.
   - We can use `R` variables directly in the text
 - **KNIT THE DOCUMENT**
   - The `R` command and its output are both displayed.
+
+![images/red_green_sticky.png](images/red_green_sticky.png)
+
+---
+
+### `group_by()`
+
+- The `group_by()` *verb* **SPLITS `data.frame`s INTO GROUPS BASED ON A COLUMN PROPERTY**
+  - It returns a **`tibble`** - a table with extra metadata describing the groups in the table
+
+- **WRITE TEXT FOR `group_by()`
+
+```text
+## `group_by()`
+
+The `group_by()` *verb* splits `data.frame`s into groups, based on a column property. It returns a `tibble` - a table with extra metadata describing groups in the table.
+
+    ```{r group_by}
+    group_by(gapminder, continent)
+    ```
+
+This is an extremely useful step in split-apply-combine.
+```
+
+- **KNIT THE DOCUMENT**
+  - The `R` command and its output are both displayed.
+
+![images/red_green_sticky.png](images/red_green_sticky.png)
+
+---
+
+### `summarize()`
+
+- The **COMBINATION OF `group_by()` AND `summarize()` IS VERY POWERFUL AND THE BASIS OF SPLIT-APPLY-COMBINE**
+
+- **WRITE TEXT FOR `summarize()`**
+
+```text
+## `summarize()`
+
+The combination of `group_by()` and `summarize()` is very powerful, and the basis of `split-apply-combine`.
+
+We can create *new variables* using functions that repeat their action on each group produced with `group_by()`. For instance, we can calculate mean GDP by continent for `gapminder` data:
+
+    ```{r summarize}
+    meangdpContinent <- gapminder %>%
+      group_by(continent) %>%
+      summarize(meangdpPercap = mean(gdpPercap))
+    kable(meangdpContinent)
+    ```
+```
+
+- **KNIT THE DOCUMENT**
+  - The `R` command and its output are both displayed.
+
+![images/red_green_sticky.png](images/red_green_sticky.png)
+
+---
+
+### CHALLENGE
+
+- **WRITE CHALLENGE TEXT IN DOCUMENT**
+  - Solve the challenge in your `RMarkdown` document
+
+```text
+### Challenge
+
+Write a single command (which may span multiple lines, with pipes) to produce a dataframe describing:
+
+- average life expectancy by country
+
+Call the dataframe `meanlifexpCountry`. Which nation has the greatest and which the shortest life expectancy?
+
+    ```{r challenge_2}
+    afrodata <- gapminder %>%
+      filter(continent == "Africa") %>%
+      select(country, year, lifeExp)
+    kable(head(afrodata))
+    ```
+
+The nation with the longest life expectancy is `r meanlifexpCountry %>% filter(meanlifeExp==max(meanlifeExp)) %>% select(country)` and that with the shortest is `r meanlifexpCountry %>% filter(meanlifeExp==min(meanlifeExp)) %>% select(country)`.
+```
+
+- **EXPLAIN INLINE `R` SYNTAX**
+  - This means we don't have to run analysis and type output
+  - We can use `R` calculations directly in the text
+- **KNIT THE DOCUMENT**
+  - The `R` command and its output are both displayed.
+
+![images/red_green_sticky.png](images/red_green_sticky.png)
+
+---
+
+### `count()` and `n()`
+
+- Two other useful functions are related to `summarize()`
+  - `count()` reports a **NEW TABLE OF COUNTS BY GROUP**
+  - `n()` is used to represent the **COUNT OF ROWS**, when calculating new values in `summarize()`
+
+- **WRITE TEXT FOR `count()` AND `n()`**
+
+```text
+## `count()` and `n()`
+
+The *verbs* `count()` and `n()` are related to `summarize()`.
+
+- `count()` reports a new table of counts, by group
+- `n()` represents the count of rows when calculating new values with `summarize()`
+
+We can use `count()` to get the number of results in 2002 in each continent:
+
+    ```{r count}
+    result <- gapminder %>%
+      filter(year == 2002) %>%
+      count(continent, sort=TRUE)
+    kable(result)
+    ```
+
+We can use `n()` as a value in a calculation to help calculate standard error of life expectancy for each continent:
+
+    ```{r n}
+    result <- gapminder %>%
+      group_by(continent) %>%
+      summarize(selifeExp = sd(lifeExp)/sqrt(n()))
+    kable(result)
+    ```
+```
+
+- **KNIT THE DOCUMENT**
+  - The `R` command and its output are both displayed.
+- **NOTE:** standard error is (std dev)/sqrt(n)
+
+![images/red_green_sticky.png](images/red_green_sticky.png)
+
+---
+
+### `mutate()`
+
+- `mutate()` **CALCULATES NEW VARIABLES (COLUMNS) ON THE BASIS OF EXISTING COLUMNS**
+  - Say we want to calculate the **total GDP of each nation, each year, in $bn**
+  - We'd multiply the GDP per capita by the total population, and divide by 1bn
+  - We have a new data table, which is the `gapminder` data, plus an extra column
+
+- **WRITE TEXT FOR `mutate()`**
+
+```text
+## `mutate()`
+
+The `mutate()` verb calculates new variables (columns) in a dataframe, from data in existing columns.
+
+If we want to calculate the total GDP of each nation, each year, in $billion, we could multiply the GDP per capita by the total population, and divide by 1billion, then put this in a new column:
+
+    ```{r mutate}
+    gdpbynation <- gapminder %>%
+      mutate(gdpBillion = gdpPercap * pop / 1e9)
+    kable(head(gdpbynation))
+    ```
+```
+
+- **KNIT THE DOCUMENT**
+  - The `R` command and its output are both displayed.
+
+![images/red_green_sticky.png](images/red_green_sticky.png)
+
+- We can chain verbs together with pipes to **CALCULATE SEVERAL SUMMARIES IN A SINGLE `summarize()` COMMAND**
+- We can use the output of `mutate()` in the `summarize()` command
+  - We're going to calculate the **total (and standard deviation) of GDP per continent, per year**
+  - Calculate total GDP first
+  - Group by continent and year
+  - Summarise mean and sd of GDP per capita, and total GDP
+ 
+- **WRITE TEXT FOR CONCLUSION**
+
+```R
+# Conclusion
+
+We can perform powerful data analyses using `dplyr` in `R`, while still having readable, understandable code.
+
+For example, we can *chain verbs* to calculate the total (and standard deviation) of GDP per continent, for each year, as follows:
+
+```R
+    ```{r conclusion}
+    gdpbyyearContinent <- gapminder %>%
+      mutate(gdpBillion = gdpPercap * pop / 1e9) %>%
+      group_by(continent, year) %>%
+      summarize(meangdpPercap = mean(gdpPercap),
+                sdgdpPercap = sd(gdpPercap),
+                meangdpBillion = mean(gdpBillion),
+                sdgdpBillion = sd(gdpBillion))
+    kable(head(gdpbyyearContinent))
+    ```
+```
+
+
+- **KNIT THE DOCUMENT**
+  - The `R` command and its output are both displayed.
+
+- **POINT OUT THAT LEARNERS NOW HAVE A LITERATE PROGRAMMING DOCUMENT OF ALL THE MAIN `dplyr` VERBS WITH INTERACTIVE `R` CODE**
 
 ![images/red_green_sticky.png](images/red_green_sticky.png)

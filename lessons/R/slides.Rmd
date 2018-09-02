@@ -606,10 +606,6 @@ This is an R Markdown document. Markdown is a simple formatting syntax
 
 - `R` code (which is executable) is *fenced* by *backticks*
 
-<pre><code>```{r cars}
-summary(cars)
-```</code></pre>
-
 <center>
 <div class="attention">
 **Click on `Knit`**
@@ -735,3 +731,109 @@ eurodata <- gapminder %>%
 ```
 
 <img src="images/red_green_sticky.png" width="100%" />
+
+
+## Challenge (5min)
+
+Can you write a single line (which may span multiple lines in your `RMarkdown` by including pipes) to produce a dataframe containing:
+
+- year, country, life expectancy data
+- only for African nations
+
+How many rows does the dataframe have?
+
+<img src="images/red_green_sticky.png" width="100%" />
+
+## `group_by()` 
+
+<center>
+<img src="images/dplyr_group_by.png" width="50%"/>
+</center>
+
+```{r, eval=FALSE}
+group_by(gapminder, continent)
+gapminder %>% group_by(continent)
+```
+
+<center>
+<div class="attention">
+**INTERACTIVE DEMO**
+</div>
+</center>
+
+
+## `summarize()`
+
+<center>
+<img src="images/dplyr_summarize.png" width="50%"/>
+</center>
+
+```{r, eval=FALSE}
+# Produce table of mean GDP by continent
+gapminder %>%
+    group_by(continent) %>%
+    summarize(meangdpPercap=mean(gdpPercap))
+```
+
+<center>
+<div class="attention">
+**INTERACTIVE DEMO**
+</div>
+</center>
+
+
+## Challenge (5min)
+
+- Can you calculate the average life expectancy per *country* in the `gapminder` data?
+- Which nation has longest life expectancy, and which the shortest?
+
+<img src="images/red_green_sticky.png" width="100%" />
+
+
+## `count()` and `n()`
+
+- Two useful functions related to `summarize()`
+  - `count()`/`tally()`: a function that reports a table of counts by group
+  - `n()`: a function used *within* `summarize()`, `filter()` or `mutate()` to represent count by group
+    
+<center>
+<div class="attention">
+**INTERACTIVE DEMO**
+</div>
+</center>
+
+```{r, eval=FALSE}
+gapminder %>%
+  filter(year == 2002) %>%
+  count(continent, sort = TRUE)
+
+gapminder %>%
+  group_by(continent) %>%
+  summarize(se_lifeExp = sd(lifeExp)/sqrt(n()))
+```
+
+
+## `mutate()`
+
+- `mutate()` is a function allowing creation of new variables in a chain of `dplyr` verbs.
+
+<center>
+<div class="attention">
+**INTERACTIVE DEMO**
+</div>
+</center>
+
+```{r, eval=FALSE}
+# Calculate GDP in $billion
+gdp_bill <- gapminder %>%
+  mutate(gdp_billion = gdpPercap * pop / 10^9)
+
+# Calculate total/sd of GDP by continent and year
+gdp_bycontinents_byyear <- gapminder %>%
+    mutate(gdp_billion=gdpPercap*pop/10^9) %>%
+    group_by(continent,year) %>%
+    summarize(mean_gdpPercap=mean(gdpPercap),
+              sd_gdpPercap=sd(gdpPercap),
+              mean_gdp_billion=mean(gdp_billion),
+              sd_gdp_billion=sd(gdp_billion))
+```
