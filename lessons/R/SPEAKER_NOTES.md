@@ -47,6 +47,12 @@ These notes are for the tutor(s) on the first morning session of the Software Ca
     - [COMPONENTS OF AN `RMarkdown` FILE](#components-of-an-rmarkdown-file)
     - [CREATING A REPORT](#creating-a-report)
 - [SECTION 06: `dplyr`](#section-06-dplyr)
+    - [LEARNING OBJECTIVES](#learning-objectives-6)
+    - [WHAT AND WHY IS `dplyr`?](#what-and-why-is-dplyr)
+    - [SPLIT-APPLY-COMBINE](#split-apply-combine)
+    - [`select()`](#select)
+    - [`filter()`](#filter)
+    - [CHALLENGE](#challenge-2)
 
 <!-- /TOC -->
 
@@ -1465,3 +1471,217 @@ output: html_document
 
 ---
 
+### LEARNING OBJECTIVES
+
+- You're going to **learn to manipulate `data.frame`s with the six *verbs* of `dplyr`**
+
+- `select()`
+- `filter()`
+- `group_by()`
+- `summarize()`
+- `mutate()`
+- `%>%` (pipe)
+
+---
+
+### WHAT AND WHY IS `dplyr`?
+
+- `dplyr` is a package in the **TIDYVERSE**; it exists to enable **RAPID ANALYSIS OF DATA BY GROUPS**
+  - For example, if we wanted numerical (rather than graphical) analysis of the `gapminder` data by continent, we'd use `dplyr`
+- So far, we know how to subset, but **REPETITIVE APPLICATION IS TEDIOUS****
+
+- **DEMO IN CONSOLE**
+  - If we wanted to use the `gapminder` data to calculate average GDP per continent, we can
+  - This needs repetition each time we calculate for a continent 
+
+```R
+> mean(gapminder[gapminder$continent == "Africa", "gdpPercap"])
+[1] 2193.755
+> mean(gapminder[gapminder$continent == "Asia", "gdpPercap"])
+[1] 7902.15
+> mean(gapminder[gapminder$continent == "Americas", "gdpPercap"])
+[1] 7136.11
+```
+
+- **WE MIGHT MANAGE TO REPEAT BY CONTINENT, LIKE HERE - BUT *BY COUNTRY*?**
+
+- **AVOIDING REPETITION IMPROVES YOUR CODE**
+  - More **ROBUST**
+  - More **READABLE**
+  - More **REPRODUCIBLE**
+
+---
+
+### SPLIT-APPLY-COMBINE
+
+- The general principle `dplyr` supports is **SPLIT-APPLY-COMBINE**
+
+- We have a **DATASET WITH SEVERAL GROUPS** (column `x`)
+- We want to **PERFORM THE SAME OPERATION ON EACH GROUP, INDEPENDENTLY** - take a mean of `y` for each group defined in `x`, for example
+  - So we **SPLIT** the data into groups, on `x`
+  - Then we **APPLY** the operation (take the mean for each group)
+  - Then we **COMBINE** the results into a new table
+
+---
+
+### `select()`
+
+- **CREATE NEW `RMarkdown` FILE**
+  - Title it `dplyr`
+  - Save in `markdown`
+
+- **DELETE DEFAULT TEXT**
+- **WRITE INTRODUCTION**
+
+```text
+# Introduction
+
+This `RMarkdown` document contains examples for learning how to use `dplyr` to analyse dataframes by groups
+
+## Importing `dplyr`
+
+Import `dplyr` with the `require()` function, in the `{r setup}` block
+
+We also import `knitr` to get pretty tables and formatting.
+
+## Load data
+
+    ```{r load_data}
+    gapminder <- read.table("..data/gapminder-FiveYearData.csv", sep=",", header=TRUE)
+    kable(head(gapminder))
+    ```
+```
+
+- Describe **FORMAT SYMBOLS**
+- Note `kable()` **PRETTIFIES TABLES**
+- Add `require(dplyr)` and `require(knitr)` to `{r setup}` block
+- Remember the **RELATIVE PATHS**
+- **KNIT THE DOCUMENT**
+  - It's not particularly fancy, but it works.
+
+![images/red_green_sticky.png](images/red_green_sticky.png)
+
+- **WRITE TEXT FOR `select()`**
+
+```text
+# `dplyr` verbs
+
+## `select()`
+
+The `select()` *verb* selects *columns* by name.
+
+If we want to select year, country and GDP data from `gapminder`, we specify the dataset, then the column names with the `select()` function:
+
+    ```{r select}
+    kable(head(select(gapminder, year, country, gdpPercap)))
+    ```
+```
+
+- **KNIT THE DOCUMENT**
+  - The `R` command and its output are both displayed.
+
+- Add text about using the **PIPE `%>%`**
+- Here, we applied a function, but we can also **'PIPE' DATA FROM ONE VERB TO ANOTHER**
+  - These work **LIKE PIPE IN THE SHELL****
+  - **SPECIAL PIPE SYMBOL: `%>%`**
+  - Specify **ONLY COLUMNS**
+
+
+```text
+As well as using the `select()` function, we can *pipe* data into *verbs* using the `%>%` (**pipe**) operator. We *pipe* in the data, and only need to specify chosen columns:
+
+    ```{r select_pipe}
+    kable(head(gapminder %>% select(year, country, gdpPercap)))
+    ```
+```
+
+- **KNIT THE DOCUMENT**
+  - The `R` command and its output are both displayed.
+
+![images/red_green_sticky.png](images/red_green_sticky.png)
+
+---
+
+### `filter()`
+
+- `filter()` selects rows on the basis of a specified condition, or combination of conditions
+  - We can **USE IT AS A FUNCTION, OR WITH PIPES**
+
+- **WRITE TEXT FOR `filter()`**
+
+```text
+## `filter()`
+
+The `filter()` *verb* selects *rows* on the basis of a specified condition, or combination of conditions. It can also be used as a function or with *pipes*:
+
+    ```{r filter}
+    kable(head(filter(gapminder, continent=="Europe")))
+    ```
+
+    ```{r filter_pipe}
+    kable(head(gapminder %>% filter(continent=="Europe")))
+    ```
+```
+
+- **KNIT THE DOCUMENT**
+  - The `R` command and its output are both displayed.
+
+![images/red_green_sticky.png](images/red_green_sticky.png)
+
+- **WRITE TEXT FOR `%>%` (PIPES)**
+
+```text
+## `%>%` (pipe)
+
+The `%>%` (pipe) operator makes *chaining verbs* together (into a *pipeline*) more readable. When several lines of code are needed, end lines with a pipe so that `R` knows to continue.
+
+    ```{r pipes}
+    eurodata <- gapminder %>%
+      filter(continent == "Europe") %>%
+      select(year, country, gdpPercap)
+    kable(head(eurodata))
+    ```
+```
+
+- **KNIT THE DOCUMENT**
+  - The `R` command and its output are both displayed.
+
+![images/red_green_sticky.png](images/red_green_sticky.png)
+
+---
+
+### CHALLENGE
+
+- **WRITE CHALLENGE TEXT IN DOCUMENT**
+  - Solve the challenge in your `RMarkdown` document
+
+```text
+### Challenge
+
+Write a single command (which may span multiple lines, with pipes) to produce a dataframe containing:
+
+- country
+- life expectancy
+- year data 
+
+only for African nations. 
+
+Call the dataframe `afrodata`. How many rows does it have?
+
+    ```{r challenge_1}
+    afrodata <- gapminder %>%
+      filter(continent == "Africa") %>%
+      select(country, year, lifeExp)
+    kable(head(afrodata))
+    ```
+
+The dataframe `afrodata` has `r nrow(afrodata)` rows.
+```
+
+- **EXPLAIN INLINE `R` SYNTAX**
+  - This means we don't have to run analysis and type output
+  - We can use `R` variables directly in the text
+- **KNIT THE DOCUMENT**
+  - The `R` command and its output are both displayed.
+
+![images/red_green_sticky.png](images/red_green_sticky.png)

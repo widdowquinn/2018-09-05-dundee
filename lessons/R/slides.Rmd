@@ -645,3 +645,93 @@ summary(cars)
 
 # SECTION 06: `dplyr`
 
+## Learning Objectives
+
+- How to manipulate `data.frame`s with the six *verbs* of `dplyr`
+  - a 'grammar of data manipulation'
+
+<div class="highlight">
+- `select()`
+- `filter()`
+- `group_by()`
+- `summarize()`
+- `mutate()`
+- `%>%` (pipe)
+</div>
+
+<div class="references">
+- `R` for Data Science: <http://r4ds.had.co.nz/>
+- Data Wrangling cheat sheet: <https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf>
+- Introduction to `dplyr`: <https://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html>
+- Data Wrangling with `R` and `RStudio`: <https://www.rstudio.com/resources/webinars/data-wrangling-with-r-and-rstudio/>
+</div>
+
+
+## What and Why is `dplyr`?
+
+- `dplyr` is a package in the *Tidyverse*
+- Facilitates analysis by *groups*
+  - Helps avoid repetition
+    
+```{r, eval=FALSE}
+> mean(gapminder[gapminder$continent == "Africa", "gdpPercap"])
+[1] 2193.755
+> mean(gapminder[gapminder$continent == "Americas", "gdpPercap"])
+[1] 7136.11
+> mean(gapminder[gapminder$continent == "Asia", "gdpPercap"])
+[1] 7902.15
+```
+
+<div class="highlight">
+Avoiding repetition (though automation) makes code
+
+- **robust**
+- **reproducible**
+</div>
+
+
+## Split-Apply-Combine
+
+<center>
+<img src="images/splitapplycombine.png" width="100%"/>
+</center>
+
+
+## `select()`
+
+<center>
+<img src="images/dplyr_select.png" width="50%"/>
+</center>
+
+```{r, eval=FALSE}
+select(gapminder, year, country, gdpPercap)
+gapminder %>% select(year, country, gdpPercap)
+```
+
+<center>
+<div class="attention">
+**INTERACTIVE DEMO**
+</div>
+</center>
+
+
+## `filter()`
+
+* `filter()` selects rows on the basis of a specified condition
+
+<center>
+<div class="attention">
+**INTERACTIVE DEMO**
+</div>
+</center>
+
+```{r, eval=FALSE}
+filter(gapminder, continent=="Europe")
+
+# Select gdpPercap by country and year, only for Europe
+eurodata <- gapminder %>%
+              filter(continent == "Europe") %>%
+              select(year, country, gdpPercap)
+```
+
+<img src="images/red_green_sticky.png" width="100%" />
