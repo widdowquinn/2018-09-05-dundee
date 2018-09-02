@@ -166,14 +166,14 @@ INTERACTIVE DEMO
 We can write code in several ways in `RStudio`
 </div>
 
-* At the console (you've done this)
-* In a script
-* As an interactive notebook or markdown file
-* As a Shiny app
+- At the console (you've done this)
+- In a script
+- As an interactive notebook or markdown file
+- As a Shiny app
 
 We're going to create a new dataset and `R` script.
 
-* Putting code in a script makes it easier to modify, share and run
+- Putting code in a script makes it easier to modify, share and run
 
 <center>
 <div class="attention">
@@ -304,17 +304,17 @@ summary(gapminder)          # summary of data in data.frame columns
 
 ## Learning Objectives
 
-* How to make data-dependent choices in `R`
-* Use `if()` and `else()`
-* Repeat operations in `R`
-* Use `for()` loops
-* *vectorisation* to avoid repeating operations
+- How to make data-dependent choices in `R`
+- Use `if()` and `else()`
+- Repeat operations in `R`
+- Use `for()` loops
+- *vectorisation* to avoid repeating operations
 
 
 ## `if()` … `else`
 
-* We often want to perform operations (or not) *conditional* on a piece of data
-    * The `if()` and `else` construct is useful for this
+- We often want to perform operations (or not) *conditional* on a piece of data
+  - The `if()` and `else` construct is useful for this
     
 ```R
 # if
@@ -352,9 +352,9 @@ Can you do the same for 2012?
 
 ## `for()` loops
 
-* `for()` loops are a very common construct in programming
-    - `for` each `<item>` in a group, `<do something (with the item)>`
-* Not as useful in `R` as in some other languages
+- `for()` loops are a very common construction in programming
+  - `for` each `<item>` in a group, `<do something (with the item)>`
+- Not as useful in `R` as in some other languages
 
 ```{r, eval=FALSE}
 for(iterator in set of values){
@@ -371,7 +371,7 @@ for(iterator in set of values){
 
 ## `while()` loops
 
-* `while()` loops are useful when you need to *do something* **while** some condition is true
+- `while()` loops are useful when you need to *do something* **while** some condition is true
 
 ```{r, eval=FALSE}
 while(this condition is true){
@@ -404,10 +404,10 @@ while(this condition is true){
 
 ## Vectorisation
 
-* `for()` and `while()` loops are useful for program control (making decisions), but are not *efficient* for data manipulation in `R`
-* Many operations in `R` are *vectorised*
-    - Applying functions to a *vector*, applies to all elements in that *vector*
-    - **No need to loop**
+- `for()` and `while()` loops are useful for program control (making decisions), but are not *efficient* for data manipulation in `R`
+- Many operations in `R` are *vectorised*
+  - Applying functions to a *vector*, applies to all elements in that *vector*
+  - **No need to loop**
     
 <div class="highlight">
 You've already seen and used much of this behaviour
@@ -439,3 +439,107 @@ x + y
 </div>
 
 <img src="images/red_green_sticky.png" width="100%" />
+
+
+<!-- SECTION 04: FUNCTIONS -->
+
+# SECTION 04: Functions
+
+## Learning Objectives
+
+- Why functions are important
+- How to write a new function
+- Defining a function that takes arguments
+- Returning a value from a function
+- Set default values for function arguments
+
+
+## Why Functions?
+
+- Functions let us run a complex series of commands in one go
+  - under a memorable/descriptive name
+  - invoked with that name
+  - with a defined set of inputs and outputs
+  - to perform a logically coherent task
+    
+<div class="highlight">    
+Functions are the building blocks of programming
+
+**Small functions with one obvious, clearly-defined task are good practice**
+</div>
+
+
+## Defining a Function
+
+- You will often need to write your own functions
+- They take a standard form
+
+```{r, eval=FALSE}
+<function_name> <- function(<arg1>, <arg2>) {
+  <do something>
+  return(<result>)
+}
+```
+
+<center>
+<div class="attention">
+**INTERACTIVE DEMO**
+</div>
+</center>
+
+```{r, eval=FALSE}
+my_sum <- function(a, b) {
+  the_sum <- a + b
+  return(the_sum)
+}
+```
+
+
+## Documentating Functions
+
+- So far, you've been able to use `R`'s built-in help to see function documentation
+  - This isn't available for your own functions unless you write it
+
+<center>    
+<div class="highlight">
+**Your future self will thank you!**
+
+(and so will your colleagues)
+
+*Write programs for people, not for computers*
+</div>
+</center>
+
+- State what the code does (and why)
+- Define inputs and outputs
+- Give an example
+
+<center>
+<div class="attention">
+**INTERACTIVE DEMO**
+</div>
+</center>
+
+
+## Function Arguments
+
+- We can define functions that take multiple arguments
+- We can also define default values for arguments
+
+<center>
+<div class="attention">
+**INTERACTIVE DEMO**
+</div>
+</center>
+
+```{r, eval=FALSE}
+# Report countries in gapminder data
+list_countries <- function(data, letter=NULL) {
+  countries <- levels(data$country)
+  if (!is.null(letter)) {
+    matches <- startsWith(countries, letter)
+    countries <- countries[matches]
+  }
+  return(countries)
+}
+```

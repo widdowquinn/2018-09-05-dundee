@@ -34,6 +34,11 @@ These notes are for the tutor(s) on the first morning session of the Software Ca
     - [CHALLENGE](#challenge)
     - [VECTORISATION](#vectorisation)
     - [CHALLENGE](#challenge-1)
+    - [LEARNING OBJECTIVES](#learning-objectives-4)
+    - [WHY FIUNCTIONS?](#why-fiunctions)
+    - [DEFINING A FUNCTION](#defining-a-function)
+- [DOCUMENTING FUNCTIONS](#documenting-functions)
+    - [FUNCTION ARGUMENTS](#function-arguments)
 
 <!-- /TOC -->
 
@@ -968,4 +973,385 @@ mstart <- startsWith(countries, 'M')
 print(countries[mstart])
 ```
 
+- **COMMIT MODIFIED SCRIPT**
+
 ![images/red_green_sticky.png](images/red_green_sticky.png)
+
+---
+
+# 10. Functions
+
+---
+
+### LEARNING OBJECTIVES
+
+- **YOU'VE ALREADY BEEN USING BUILT-IN FUNCTIONS (e.g. `log()`)** and, I hope, have found them useful
+- Functions let us run a complex series of commands in one go
+  - **YOU WOULDN'T HAVE TO WANT TO WRITE/REPEAT BASIC CALCULATIONS FOR `log()` EACH TIME YOU USE IT**
+  - They keep the operation under a **MEMORABLE OR DESCRIPTIVE NAME**, which makes the code **READABLE AND UNDERSTANDABLE**, and they are invoked with that name
+  - There are a **DEFINED SET OF INPUTS AND OUTPUTS** for a function, so **WE KNOW WHAT BEHAVIOUR TO EXPECT**
+
+---
+
+### WHY FIUNCTIONS?
+
+- Functions let us **RUN A COMPLEX SERIES OF RELATED COMMANDS IN ONE GO**
+  - Can be **LOGICALLY** or **FUNCTIONALLY** related
+- It helps when functions have **DESCRIPTIVE AND MEMORABLE NAMES**, as this makes code **READABLE AND UNDERSTANDABLE**
+- We invoke functions with their name
+- We **A DEFINED SET OF INPUTS AND OUTPUTS** - aids clarity and understanding
+
+- **FUNCTIONS ARE THE BUILDING BLOCKS OF PROGRAMMING**
+
+- As a **RULE OF THUMB** it is good to write small functions with one obvious, clearly-defined task.
+  - As you will see we can **CHAIN SMALL FUNCTIONS TOGETHER TO MANAGE COMPLEXITY**
+
+----
+
+### DEFINING A FUNCTION
+
+- Functions have a **STANDARD FORM** in `R`
+  - We **DECLARE A `<function_name>`**
+  - We use the `function` *function*/keyword to assign the function to `<function_name>`
+  - Inputs (*arguments*) to a function are defined in parentheses: These are defined as variables for use within the function **AND DO NOT EXIST OUTSIDE THE FUNCTION**
+  - The code block (**cCURLY BRACES**) encloses the function code, the *function body*.
+  - **NOTE THE INDENTATION** - *Easier to read, but does not affect execution*
+  - The code `<does_something>`
+  - The `return()` function returns the value, when the function is called
+
+- **DEMO IN SCRIPT**
+  - **CREATE NEW SCRIPT `functions.R`**
+  - Write and `Source`
+
+```R
+# Example function
+# Returns the sum of two input values
+my_sum <- function(a, b) {
+  the_sum <- a + b
+  return(the_sum)
+}
+```
+
+- **ADD SCRIPT TO VERSION CONTROL**
+
+- **DEMO IN CONSOLE**
+  - **SOURCE** the script
+
+```R
+> my_sum(3, 7)
+[1] 10
+> a
+Error: object 'a' not found
+> b
+Error: object 'b' not found
+```
+
+- **GOOD VARIABLE NAMING IS IMPORTANT**
+  - For a function this size, and so simple, it's clear what `a` and `b` are - but that is not always the case
+  - We can make the function clearer by changing these names
+- **CHANGE VARIABLE NAMES IN-PLACE**
+
+- **TEST THE SCRIPT**
+
+```R
+# Example function
+# Returns the sum of two input values
+my_sum <- function(val1, val2) {
+  the_sum <- val1 + val2
+  return(the_sum)
+}
+```
+
+```R
+> source('~/Desktop/swc-r-lesson/scripts/functions.R')
+> my_sum(3, 7)
+[1] 10
+> a
+Error: object 'a' not found
+> val1
+Error: object 'val1' not found
+> val2
+Error: object 'val2' not found
+```
+
+- **ADD SCRIPT TO VERSION CONTROL**
+
+- **DEMO IN SCRIPT**
+  - Let's define another function: convert temperature from fahrenheit to Kelvin
+
+```R
+# Convert Fahrenheit to Kelvin
+fahr_to_kelvin <- function(temp) {
+  kelvin <- (temp - 32) * (5 / 9) + 273.15
+  return(kelvin)
+}
+```
+
+- **SOURCE AND DEMO IN SCRIPT**
+
+```R
+> fahr_to_kelvin(32)
+[1] 273.15
+> fahr_to_kelvin(-40)
+[1] 233.15
+> fahr_to_kelvin(212)
+[1] 373.15
+> temp
+Error: object 'temp' not found
+```
+
+- **LET'S MAKE ANOTHER FUNCTION CONVERTING KELVIN TO CELSIUS**
+- **DEMO IN SCRIPT**
+  - `Source` the script
+
+```R
+# Convert Kelvin to Celsius
+kelvin_to_celsius <- function(temp) {
+  celsius <- temp - 273.15
+  return(celsius)
+}
+```
+
+- **SOURCE AND DEMO IN CONSOLE**
+
+```R
+> kelvin_to_celsius(273.15)
+[1] 0
+> kelvin_to_celsius(233.15)
+[1] -40
+> kelvin_to_celsius(373.15)
+[1] 100
+```
+
+- **WE COULD DEFINE A NEW FUNCTION TO CONVERT FAHRENHEIT TO CELSIUS**
+  - But it's **EASIER TO COMBINE EXISTING FUNCTIONS** we've already written
+  - **AVOIDS INTRODUCING NEW BUGS**
+  - Efficient to **REUSE CODE**
+
+- **DEMO IN CONSOLE**
+
+```R
+> fahr_to_kelvin(212)
+[1] 373.15
+> kelvin_to_celsius(fahr_to_kelvin(212))
+[1] 100
+```
+
+- **DEMO IN SCRIPT**
+
+```R
+# Fahrenheit to Celsius
+fahr_to_celsius <- function(temp) {
+  celsius <- kelvin_to_celsius(fahr_to_kelvin(temp))
+  return(celsius)
+}
+```
+
+- **DEMO IN CONSOLE**
+  - **NOTE: AUTOMATICALLY TAKES ADVANTAGE OF `R`'s VECTORISATION**
+
+```R
+> fahr_to_celsius(212)
+[1] 100
+> fahr_to_celsius(32)
+[1] 0
+> fahr_to_celsius(-40)
+[1] -40
+> fahr_to_celsius(c(-40, 32, 212))
+[1] -40   0 100
+```
+
+---
+
+## DOCUMENTING FUNCTIONS
+
+- It's important to have well-named functions (and variables... **THIS IS A FORM OF DOCUMENTATION - SELF-DOCUMENTING CODE**)
+- But it's not a detailed explanation
+
+- You've found `R`'s help useful, but it doesn't exist for your functions until you write it
+- **YOUR FUTURE SELF WILL THANK YOU FOR DOING IT!**
+
+- **SOME GOOD PRINCIPLES TO FOLLOW WHEN WRITING DOCUMENTATION ARE:**
+  - Say **WHAT** the code does (and **WHY**) - *more important than how* (the code does that)
+  - Define your inputs and outputs
+  - Provide an example
+
+- **DEMO IN CONSOLE**
+
+```R
+> ?fahr_to_celsius
+No documentation for ‘fahr_to_celsius’ in specified packages and libraries:
+you could try ‘??fahr_to_celsius’
+> ??fahr_to_celsius
+```
+
+- **DEMO IN SCRIPT**
+  - We add documentation as comment strings in the function
+
+```R
+# Fahrenheit to Celsius
+fahr_to_celsius <- function(temp) {
+  # Convert input temperature from fahrenheit to celsius scale
+  #
+  # temp        - numeric 
+  #
+  # Example:
+  # > fahr_to_celsius(c(-40, 32, 212))
+  # [1] -40   0 100
+  celsius <- kelvin_to_celsius(fahr_to_kelvin(temp))
+  return(celsius)
+}
+```
+- **SOURCE** the script
+- **DEMO IN CONSOLE**
+
+```R
+> ?fahr_to_celsius
+No documentation for ‘fahr_to_celsius’ in specified packages and libraries:
+you could try ‘??fahr_to_celsius’
+```
+
+- We read the documentation by providing the function name **ONLY**
+
+```R
+> fahr_to_celsius
+function(temp) {
+  # Convert input temperature from fahrenheit to celsius scale
+  #
+  # temp        - numeric 
+  #
+  # Example:
+  # > fahr_to_celsius(c(-40, 32, 212))
+  # [1] -40   0 100
+  celsius <- kelvin_to_celsius(fahr_to_kelvin(temp))
+  return(celsius)
+}
+```
+
+- **COMMIT SCRIPT TO VERSION CONTROL**
+
+---
+
+### FUNCTION ARGUMENTS
+
+- **DEMO IN SCRIPT** (`functions.R`)
+  - `Source` script
+
+```R
+# Report countries in gapminder data
+list_countries <- function(data) {
+  # Returns countries from the gapminder dataset
+  #
+  # data          - gapminder data.frame
+  #
+  # Example:
+  # countries <- list_countries(gapminder)
+  countries <- levels(data$country)
+  return(countries)
+}
+```
+
+- **SOURCE SCRIPT**
+- **DEMO IN CONSOLE**
+
+
+```R
+> list_countries(gapminder)
+  [1] "Afghanistan"              "Albania"                  "Algeria"                 
+  [4] "Angola"                   "Argentina"                "Australia"               
+  [7] "Austria"                  "Bahrain"                  "Bangladesh" 
+  [...]   
+```
+
+- So, those are *all* the `gapminder` countries - but what if we want to **GET COUNTRIES STARTING WITH A GIVEN LETTER?**
+- **DEMO IN SCRIPT** (`functions.R`)
+   - `Source` script
+
+```R
+> list_countries(gapminder, 'M')
+Error in list_countries(gapminder, "M") : unused argument ("M")
+```
+
+- The function doesn't understand what we want
+- We need to **TELL THE FUNCTION TO EXPECT A LETTER**
+  - **DEMO IN SCRIPT**
+  - Don't forget to update the documentation
+
+```R
+# Report countries in gapminder data
+list_countries <- function(data, letter) {
+  # Returns countries from the gapminder dataset,
+  # filtered by starting letter
+  #
+  # data          - gapminder data.frame
+  # letter        - character
+  #
+  # Example:
+  # countries <- list_countries(gapminder)
+  countries <- levels(data$country)
+  matches <- startsWith(countries, letter)
+  return(countries[matches])
+}
+```
+
+- Now the function should accept a letter, and report only countries starting with the letter
+- **SOURCE THE SCRIPT**
+
+```R
+> list_countries(gapminder, 'M')
+ [1] "Madagascar" "Malawi"     "Malaysia"   "Mali"       "Mauritania" "Mauritius"  "Mexico"    
+ [8] "Mongolia"   "Montenegro" "Morocco"    "Mozambique" "Myanmar" 
+```
+
+- So that works, but we have a problem:
+
+```R
+> list_countries(gapminder)
+Error in startsWith(countries, letter) : 
+  argument "letter" is missing, with no default
+```
+
+- **NO LETTER PROVIDED MEANS NO OUTPUT**
+  - We need to handle this
+    - 1 - **PROVIDE A DEFAULT VALUE** (`NULL`)
+    - 2 - **TEST FOR VALUE AND TAKE ALTERNATIVE ACTIONS**
+- **DEMO IN SCRIPT**
+
+```R
+# Report countries in gapminder data
+list_countries <- function(data, letter=NULL) {
+  # Returns countries from the gapminder dataset, optionally
+  # filtered by starting letter
+  #
+  # data          - gapminder data.frame
+  # letter        - character
+  #
+  # Example:
+  # countries <- list_countries(gapminder)
+  countries <- levels(data$country)
+  if (!is.null(letter)) {
+    matches <- startsWith(countries, letter)
+    countries <- countries[matches]
+  }
+  return(countries)
+}
+``` 
+
+- **SOURCE SCRIPT**   
+- **DEMO IN CONSOLE**
+
+```R
+> source('~/Desktop/swc-r-lesson/scripts/functions.R')
+> list_countries(gapminder)
+  [1] "Afghanistan"              "Albania"                  "Algeria"                 
+  [4] "Angola"                   "Argentina"                "Australia"               
+  [7] "Austria"                  "Bahrain"                  "Bangladesh" 
+  [...]
+> list_countries(gapminder, 'M')
+ [1] "Madagascar" "Malawi"     "Malaysia"   "Mali"       "Mauritania" "Mauritius"  "Mexico"    
+ [8] "Mongolia"   "Montenegro" "Morocco"    "Mozambique" "Myanmar"   
+> list_countries(gapminder, 'G')
+[1] "Gabon"         "Gambia"        "Germany"       "Ghana"         "Greece"        "Guatemala"    
+[7] "Guinea"        "Guinea-Bissau"
+```
+
