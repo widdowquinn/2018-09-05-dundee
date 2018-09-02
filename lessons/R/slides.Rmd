@@ -543,3 +543,75 @@ list_countries <- function(data, letter=NULL) {
   return(countries)
 }
 ```
+
+
+<!-- SECTION 05: Dynamin Reports -->
+
+# SECTION 05: <br />Dynamic Reports
+
+
+## Learning Objectives
+
+- Create dynamic, reproducible reports
+- `RMarkdown` syntax
+- Inline `R` code in documents
+- Producing documents in `.pdf`, `.html`, etc.
+
+
+## Literate Programming
+
+- A *programming paradigm* introduced by Donald Knuth
+- The program (or analysis) is explained in natural language
+  - The *source code* is interspersed through the document
+- The whole document is *executable*
+
+<div class="highlight">
+**We can produce these documents in `RStudio`**
+</div>
+
+<div class="references">
+- Literate Programming, by Donald Knuth: <http://www.literateprogramming.com/knuthweb.pdf>
+</div>
+
+
+## Create an `R Markdown` File
+
+- `R Markdown` files embody Literate Programming in `R`
+- `File` $\rightarrow$ `New File` $\rightarrow$ `R Markdown`
+- Enter a title
+- Save the file (gets the extension `.Rmd`)
+
+<center>
+<img src="images/rmarkdown_dialog.png" width="40%" />
+<img src="images/rmarkdown_start.png" width="47%" />
+</center>
+
+
+## Components of an `R Markdown` File
+
+- Header information is *fenced* by `---`
+
+```{r, eval=FALSE}
+---
+title: "Literate Programming"
+author: "Leighton Pritchard"
+---
+```
+
+- Natural language is written as plain text
+
+```{r, eval=FALSE}
+This is an R Markdown document. Markdown is a simple formatting syntax
+```
+
+- `R` code (which is executable) is *fenced* by *backticks*
+
+<pre><code>```{r cars}
+summary(cars)
+```</code></pre>
+
+<center>
+<div class="attention">
+**Click on `Knit`**
+</div>
+</center>

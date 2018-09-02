@@ -39,6 +39,11 @@ These notes are for the tutor(s) on the first morning session of the Software Ca
     - [DEFINING A FUNCTION](#defining-a-function)
 - [DOCUMENTING FUNCTIONS](#documenting-functions)
     - [FUNCTION ARGUMENTS](#function-arguments)
+- [SECTION 05: DYNAMIC REPORTS](#section-05-dynamic-reports)
+    - [LEARNING OBJECTIVES](#learning-objectives-5)
+    - [LITERATE PROGRAMMING](#literate-programming)
+    - [CREATE AN `RMarkdown` FILE](#create-an-rmarkdown-file)
+    - [COMPONENTS OF AN `RMarkdown` FILE](#components-of-an-rmarkdown-file)
 
 <!-- /TOC -->
 
@@ -1355,3 +1360,92 @@ list_countries <- function(data, letter=NULL) {
 [7] "Guinea"        "Guinea-Bissau"
 ```
 
+- **COMMIT SCRIPT TO VERSION CONTROL**
+
+---
+
+## SECTION 05: DYNAMIC REPORTS
+
+---
+
+### LEARNING OBJECTIVES
+
+- In this section, we'll be learning how to create **REPRODUCIBLE, ATTRACTIVE, DYNAMIC REPORTS** with `RMarkdown`
+- To do so, we'll learn some `RMarkdown` **SYNTAX**, and how to put **WORKING `R` CODE** into a document
+- We'll also look at generating the report in **A NUMBER OF FILE FORMATS**, for sharing.
+
+---
+
+### LITERATE PROGRAMMING
+
+- What we're about to do is an example of **Literate Programming**, a concept introduced by Donald Knuth
+- The idea of Literate Programming is that
+  - The program or analysis is explained in **NATURAL LANGUAGE****
+  - The **CODE** needed to run the program/analysis is **EMBEDDED IN THE DOCUMENT**
+  - The whole document is executable
+
+- We can produce these documents in `RStudio`
+
+---
+
+### CREATE AN `RMarkdown` FILE
+
+- In `R`, literate programming is **implemented in `RMarkdown` files
+- To create one: **`File` $\rightarrow$ `New File` $\rightarrow$ `R Markdown`**
+  - There is a dialog box
+    - **ENTER A TITLE** (`Literate Programming`)
+    - **CLICK OK**
+  - Save the file (`Ctrl-S`)
+    - **CREATE NEW SUBDIRECTORY** (`markdown`)**
+    - **SAVE AS** `literate_programming.Rmd`
+- The file gets the **EXTENSION** `.Rmd`
+  - The file is **AUTOPOPULATED** with example text
+
+---
+
+### COMPONENTS OF AN `RMarkdown` FILE
+
+- The **HEADER REGION** is fenced by `---`
+  - **METADATA** (author, title, date)
+  - Requested **OUTPUT FORMAT**
+
+```R
+---
+title: "Literate Programming"
+author: "Leighton Pritchard"
+date: "04/12/2017"
+output: html_document
+---
+```
+
+- Natural language is written as plain text, with some **EXTRA CHARACTERS FOR FORMATTING**
+  - **NOTE THE HASHES `#`, ASTERISKS `*` AND ANGLED BRACKETS `<>`**
+- `R` code runs in the document, and is **fenced by backticks**
+
+- **CLICK ON `KNIT`**
+  - A new (pretty) document is produced in a new window
+
+- **CROSS REFERENCE MARKDOWN TO DOCUMENT**
+  - **Title, Author, Date**
+  - **Header**
+  - **Link**
+  - **Bold**
+  - **`R` code and output**
+  - **Plots**
+
+- **SHOW THAT AN HTML FILE IS PRODUCED**
+
+- **CLICK ON `KNIT TO PDF`**
+  - A new `.pdf` document opens in a new window
+- **CROSS REFERENCE MARKDOWN TO DOCUMENT**
+  - **NOTE:** The formatting isn't identical
+
+- **CLICK ON `KNIT TO WORD`**
+  - A new `Word` document opens up
+- **CROSS REFERENCE MARKDOWN TO DOCUMENT**
+  - **NOTE:** The formatting isn't identical
+
+- **NOTE THE LOCATION OF THE OUTPUT FILES - ALL IN THE SOURCE DIRECTORY**
+  - **CLOSE THE OUTPUT**
+
+---
