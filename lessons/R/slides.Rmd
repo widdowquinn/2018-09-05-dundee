@@ -388,14 +388,11 @@ while(this condition is true){
 
 ## Challenge (5min)
 
-**In your script**, can you use a `for()` loop and an `if()` statement to print each letter in the alphabet, and `TRUE` when it is a vowel, or `FALSE` when it is not?
+**In your script**, can you use a `for()` loop and an `if()` statement to loop over each country in the `gapminder` data, and report `TRUE` when it starts with the letter `M`, and `FALSE` when it does not?
 
 <div class="attention">
-**HINT:** Use `R`'s help for `letters` and `%in%`
-</div>
-
-<div class="highlight">
-**BONUS POINT:** defnyddiwch llafariadau Cymraeg ;)
+**HINT:** Use `R`'s built in `startsWith()` function
+**HINT:** Use `levels()` to get unique country names
 </div>
 
 <img src="images/red_green_sticky.png" width="100%" />

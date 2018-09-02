@@ -884,14 +884,14 @@ Error: unexpected 'in' in "?in"
 
 ```R
 # Challenge solution
-vowels <- c('a', 'e', 'i', 'o', 'u', 'w', 'y')
-for (l in letters) {
-  if (l %in% vowels) {
+gapminder <- read.table("data/gapminder-FiveYearData.csv", sep=",", header=TRUE)
+for (c in levels(gapminder$country)) {
+  if (startsWith(c, 'M')) {
     value <- TRUE
   } else {
     value <- FALSE
   }
-  print(paste(l, value))
+  print(paste(c, value))
 }
 ```
 
