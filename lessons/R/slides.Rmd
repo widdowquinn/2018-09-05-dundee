@@ -545,7 +545,7 @@ list_countries <- function(data, letter=NULL) {
 ```
 
 
-<!-- SECTION 05: Dynamin Reports -->
+<!-- SECTION 05: Dynamic Reports -->
 
 # SECTION 05: <br />Dynamic Reports
 
@@ -615,3 +615,33 @@ summary(cars)
 **Click on `Knit`**
 </div>
 </center>
+
+
+## Creating a Report
+
+- We're going to create an `R Markdown` report on the `gapminder` data
+  - using `dplyr`
+  - using `ggplot2`
+
+<center>
+<div class="attention">
+**INTERACTIVE DEMO**
+</div>
+</center>
+
+<center>
+<img src="images/rmarkdown_final.png" width="40%" />
+</center>
+
+<div class="references">
+* `R Markdown` documentation: <http://rmarkdown.rstudio.com/>
+* `R Markdown` cheat sheet: <http://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf>
+* Getting started with `R Markdown`: <https://www.rstudio.com/resources/webinars/getting-started-with-r-markdown/>
+* Reproducible reporting: <https://www.rstudio.com/resources/webinars/reproducible-reporting/>
+</div>
+
+
+<!-- SECTION 06: `dplyr` -->
+
+# SECTION 06: `dplyr`
+

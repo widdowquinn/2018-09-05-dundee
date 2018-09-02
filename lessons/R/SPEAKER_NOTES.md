@@ -13,7 +13,7 @@ These notes are for the tutor(s) on the first morning session of the Software Ca
     - [TITLE: Programming in `R`](#title-programming-in-r)
     - [ETHERPAD](#etherpad)
     - [LEARNING OBJECTIVES](#learning-objectives)
-    - [SECTION 01: `RSTUDIO`](#section-01-rstudio)
+- [SECTION 01: `RSTUDIO`](#section-01-rstudio)
     - [LEARNING OBJECTIVES](#learning-objectives-1)
     - [WHAT IS `RSTUDIO`?](#what-is-rstudio)
     - [`RSTUDIO` OVERVIEW - **INTERACTIVE DEMO**](#rstudio-overview---interactive-demo)
@@ -21,7 +21,7 @@ These notes are for the tutor(s) on the first morning session of the Software Ca
     - [GETTING HELP FOR BUILT-IN FUNCTIONS](#getting-help-for-built-in-functions)
     - [NUMERICAL COMPARISONS](#numerical-comparisons)
     - [WORKING IN RSTUDIO](#working-in-rstudio)
-    - [SECTION 02: MY FIRST `RSTUDIO` PROJECT](#section-02-my-first-rstudio-project)
+- [SECTION 02: MY FIRST `RSTUDIO` PROJECT](#section-02-my-first-rstudio-project)
     - [LEARNING OBJECTIVES](#learning-objectives-2)
     - [PROJECT MANAGEMENT IN RSTUDIO](#project-management-in-rstudio)
     - [OBTAINING DATA](#obtaining-data)
@@ -34,16 +34,19 @@ These notes are for the tutor(s) on the first morning session of the Software Ca
     - [CHALLENGE](#challenge)
     - [VECTORISATION](#vectorisation)
     - [CHALLENGE](#challenge-1)
+- [SECTION 04: FUNCTIONS](#section-04-functions)
     - [LEARNING OBJECTIVES](#learning-objectives-4)
     - [WHY FIUNCTIONS?](#why-fiunctions)
     - [DEFINING A FUNCTION](#defining-a-function)
-- [DOCUMENTING FUNCTIONS](#documenting-functions)
+    - [DOCUMENTING FUNCTIONS](#documenting-functions)
     - [FUNCTION ARGUMENTS](#function-arguments)
 - [SECTION 05: DYNAMIC REPORTS](#section-05-dynamic-reports)
     - [LEARNING OBJECTIVES](#learning-objectives-5)
     - [LITERATE PROGRAMMING](#literate-programming)
     - [CREATE AN `RMarkdown` FILE](#create-an-rmarkdown-file)
     - [COMPONENTS OF AN `RMarkdown` FILE](#components-of-an-rmarkdown-file)
+    - [CREATING A REPORT](#creating-a-report)
+- [SECTION 06: `dplyr`](#section-06-dplyr)
 
 <!-- /TOC -->
 
@@ -145,7 +148,7 @@ CTRL + L
 
 ---
 
-### SECTION 01: `RSTUDIO`
+## SECTION 01: `RSTUDIO`
 
 ---
 
@@ -451,7 +454,7 @@ cats <- read.csv(file = "feline_data.csv")
 
 ---
 
-### SECTION 02: MY FIRST `RSTUDIO` PROJECT
+## SECTION 02: MY FIRST `RSTUDIO` PROJECT
 
 ---
 
@@ -984,7 +987,7 @@ print(countries[mstart])
 
 ---
 
-# 10. Functions
+## SECTION 04: FUNCTIONS
 
 ---
 
@@ -1168,7 +1171,7 @@ fahr_to_celsius <- function(temp) {
 
 ---
 
-## DOCUMENTING FUNCTIONS
+### DOCUMENTING FUNCTIONS
 
 - It's important to have well-named functions (and variables... **THIS IS A FORM OF DOCUMENTATION - SELF-DOCUMENTING CODE**)
 - But it's not a detailed explanation
@@ -1449,3 +1452,16 @@ output: html_document
   - **CLOSE THE OUTPUT**
 
 ---
+
+### CREATING A REPORT
+
+- We'll **CREATE A REPORT** on the `gapminder` data
+  - We'll be using **LITERATE PROGRAMMING**
+  - We'll also be learning some `dplyr` and `ggplot2` as we go
+
+---
+
+## SECTION 06: `dplyr`
+
+---
+
